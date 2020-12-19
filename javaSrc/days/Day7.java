@@ -1,19 +1,27 @@
 package days;
 
+import java.io.IOException;
+import util.ReadInput;
+
 public class Day7 {
 
-    public static void update(String fileInfo[]) {
-        String rules[][] = new String[2][600];  //All Outside Colors[0] & the rest[1], easy searches
-        String fndColor[] = new String[600];    //Colors found to match
-        Boolean trkColor[] = new Boolean[600];  //Track if a rule has already been used (594)
+    public static void update() throws IOException {
+        String fileInfo[];
+        fileInfo = ReadInput.GetInput(7);   //Get input in an array for 7
+        int len = fileInfo.length;          //Length of input array
+
+        String rules[][] = new String[2][len];  //All Outside Colors[0] & the rest[1], easy searches
+        String fndColor[] = new String[len];    //Colors found to match
+        boolean trkColor[] = new boolean[len];  //Track if a rule has already been used (594)
         //Initalize arrays
         for(int s = 0; s < rules.length; s++){
             rules[0][s] = "";   //Outside
             rules[1][s] = "";   //The rest
         }
         for(int s = 0; s < fndColor.length; s++) fndColor[s] = "";
-        for(int b = 0; b < trkColor.length; b++) trkColor[b] = false;
         GetRules(fileInfo, rules);
+
+        //------------------- Part 1 ------------------------------
 
         fndColor[0] = "shiny gold";     //Seed
         int outClrCnt = 0;              //Count for a outside color level
@@ -31,27 +39,23 @@ public class Day7 {
         //0, 5 || 1, 30 || 6, 77 || 36, 83 || 113, 75 || 196, 45 || 271, 16
         //316, 5 || 332, 1 || 337, 0 || 338, 0
 
-        System.out.println("\n\nTurducken Colors -\t" + (outClrCnt));
+        System.out.println("\n\nTurducken Colors -\t" + (outClrCnt));   //confirmed 337
 
 
         //------------------- Part 2 ------------------------------
 
-        // int numOf[][] = new int[5][600];        //Colors found to match
-        String color[][] = new String[5][600];  //All Outside Colors[0] & the rest[1], easy searches
-        Boolean trkCmpl[] = new Boolean[600];   //Track if a rule has already been done (594)
+        String color[][] = new String[5][len];  //All Outside Colors[0] & the rest[1], easy searches
         //Initalize arrays
-        for(int s = 0; s < rules.length; s++) color[0][s] = "";
-        for(int s = 0; s < rules.length; s++) color[1][s] = "";
-        for(int b = 0; b < trkCmpl.length; b++) trkCmpl[b] = false;
+        for(int s = 0; s < len; s++) color[0][s] = "";
+        for(int s = 0; s < len; s++) color[1][s] = "";
 
         int cntAll = 0;
         String myBag = "shiny gold";
 
         cntAll = GetBagCnt( rules, myBag, cntAll );
         cntAll--;   //Don't onclude the Gold bag
-        System.out.println("\n\nBag-O-Bags -\t" + cntAll);
+        System.out.println("Bag-O-Bags \t-\t" + cntAll);  //confirmed 50100
     }
-
 
     //------------------------- Common ----------------------------------
 
@@ -89,7 +93,7 @@ public class Day7 {
      * @param strt
      * @return
      */
-    private static int FindMatch(String rules[][], String fndColor[], Boolean trkClr[], int strt, int end){
+    private static int FindMatch(String rules[][], String fndColor[], boolean trkClr[], int strt, int end){
         int cnt = 0;
         int oNdx = 0;
 
@@ -115,10 +119,10 @@ public class Day7 {
      * @param trkClr
      * @return
      */
-    private static int CntColors( Boolean trkClr[]){
+    private static int CntColors( boolean trkClr[]){
         int cnt = 0;
 
-        for( Boolean b : trkClr ) if(b) cnt++;
+        for( boolean b : trkClr ) if(b) cnt++;
         return cnt;
     }
 

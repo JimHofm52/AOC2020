@@ -1,8 +1,15 @@
 package days;
 
+import java.io.IOException;
+import util.ReadInput;
+
 public class Day6 {
 
-    public static void update(String fileInfo[]) {
+    public static void update() throws IOException {
+
+        String fileInfo[];
+        fileInfo = ReadInput.GetInput(6);   //Get input in an array for 6
+        int len = fileInfo.length;          //Length of input array
 
         int grpPplCnt[][] = new int[487][26];   //Yeses per grp(487) per answer(26)
         int grpPplNum[] = new int[487];         //people in each group
@@ -13,10 +20,10 @@ public class Day6 {
         for (int i=0; i < grpPplCnt.length; i++) {
             total += GrpTot(grpPplCnt, i);                  //part 1
             totYes += CntAllYes(grpPplCnt, grpPplNum, i);   //part 2
-            int a = 1;
         }
-        System.out.println("\nTotal - " + total);     //Confirmed answer = 6532 part 1
-        System.out.println("Total Yes - " + totYes);  //Confirmed answer = 3427 part 2
+
+        System.out.println("\nTotal - \t" + total);     //Confirmed answer = 6532 part 1
+        System.out.println("Total Yes - \t" + totYes);  //Confirmed answer = 3427 part 2
     }
 
 

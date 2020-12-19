@@ -7,7 +7,7 @@ public class Day8 {
 
     public static void update() throws IOException {
         String fileInfo[];
-        fileInfo = ReadInput.GetInput(8);   //Get input in an array
+        fileInfo = ReadInput.GetInput(8);   //Get input in an array for 8
         int len = fileInfo.length;          //Length of input array
 
         int opsAcc[][] = new int[2][len];   //Opcode[0][] / Acc[1][]
@@ -18,15 +18,15 @@ public class Day8 {
                                                     //extra cell, used if program completes
 
         int acc = 0;    //Accumlator
-        acc =  FindLoop(opsAcc, flipped, false);        //Part 1
-        System.out.println("\n\nAccumulator - " + acc); //Part 1
+        acc =  FindLoop(opsAcc, flipped, false);                //Part 1
+        System.out.println("\n\nPart 1, Accumulator - " + acc); //Part 1, confirmed 1709
 
         for(int i = 0; i < len; i++){                   // Part 2
             acc = FindLoop(opsAcc, flipped, true);      // Part 2
             if(flipped[len]) break; //stop if at end of program[0][617(9)].  Flagged in flipped extra cell
         }
 
-        System.out.println("\n\nAccumulator - " + acc);  //Part 2
+        System.out.println("Part 2, Accumulator - " + acc);     //Part 2, confirmed 1976
     }
 
     /**
