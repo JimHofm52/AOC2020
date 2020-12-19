@@ -1,12 +1,46 @@
 package days;
 
+import java.io.IOException;
+import util.ReadInput;
+
 public class Day8 {
 
-    public static void update(String fileInfo[]) {
+    public static void update() throws IOException {
+        String fileInfo[];
+        fileInfo = ReadInput.GetInput(8);   //Get input in an array
+        int len = fileInfo.length;          //Length of input array
+
+        int opsAcc[][] = new int[2][len];   //Opcode[0][] / Acc[1][]
+        ParceCodes(fileInfo, opsAcc);       //Split input into [0]opCode and [1]acc or jmp value
+                                            //Opcodes - 0=acc, 1=jmp, 2=nop
+
+        boolean flipped[] = new boolean[len + 1];   //Part 2 track if flipping op has has been tried
+                                                    //extra cell, used if program completes
+
         int acc = 0;    //Accumlator
+        acc =  FindLoop(opsAcc, flipped, false);        //Part 1
+        System.out.println("\n\nAccumulator - " + acc); //Part 1
+
+        for(int i = 0; i < len; i++){                   // Part 2
+            acc = FindLoop(opsAcc, flipped, true);      // Part 2
+            if(flipped[len]) break; //stop if at end of program[0][617(9)].  Flagged in flipped extra cell
+        }
+
+        System.out.println("\n\nAccumulator - " + acc);  //Part 2
+    }
+
+    /**
+     * Split the input into op code and acc or jmp value
+     * opCode is coded as 0 = acc, 1 = jmp, & 2 = nop
+     * 
+     * @param fileInfo
+     */
+    public static void update2(String fileInfo[]) {
+        int acc = 0;    //Accumlator
+        int len = fileInfo[0].length();
                                                 //Opcodes - 0=acc, 1=jmp, 2=nop
-        int opsAcc[][] = new int[2][650];       //Opcode[0][] / Acc[1][]
-        boolean flipped[] = new boolean[650];   //Part 2 track if flipping op has has been tried
+        int opsAcc[][] = new int[2][len];       //Opcode[0][] / Acc[1][]
+        boolean flipped[] = new boolean[len];   //Part 2 track if flipping op has has been tried
 
         ParceCodes(fileInfo, opsAcc);   //Split input into [0]opCode and [1]acc or jmp value
 
@@ -19,7 +53,7 @@ public class Day8 {
             nxtCnt++;
             acc = FindLoop(opsAcc, flipped, true);
         //continue if end of program[0][617(9)] initialized (-2) and LT 650 trys (safety)
-        }while(opsAcc[0][617] < 0 && nxtCnt < opsAcc[0].length); 
+        }while(opsAcc[0][len - 1] < 0 && nxtCnt < len); 
 
         System.out.println("\n\nAccumulator - " + acc);  //Part 2
     }
@@ -34,9 +68,8 @@ public class Day8 {
      */
     private static void ParceCodes(String fileInfo[], int opsAcc[][]){
         String sTmp = "";
-        int ndx = 0;
 
-        do{
+        for( int ndx = 0; ndx < fileInfo.length; ndx++){
             sTmp = fileInfo[ndx].substring(0,3);    //Get opcode
             if(sTmp.contains("acc")){               //0 = acc
                 opsAcc[0][ndx] = 0;
@@ -46,13 +79,6 @@ public class Day8 {
                 opsAcc[0][ndx] = 2;                 //2 = nop
             }
             opsAcc[1][ndx] = Integer.parseInt(fileInfo[ndx].substring(4));   //Get acc value
-            ndx++;
-        }while(fileInfo[ndx].length() > 0);
-
-        // initialize the rest of the array, just in case
-        for( ; ndx < opsAcc[0].length; ndx++){
-            opsAcc[0][ndx] = -1;     //[0] is opcode
-            opsAcc[1][ndx] = 0;      //[1] is acc or jmp value
         }
     }
 
@@ -68,15 +94,18 @@ public class Day8 {
      * @return
      */
     private static int FindLoop(int opsAcc[][], boolean flipped[], boolean chkFlip){
-        int ptr = 0;    //pointer to opsAcc input
+        int ptr = 0;    //pointer to opsAcc
         int exe = 0;    //execution pointer
-        int exeTrkr[] = new int[650];   //Used to track execution repeat
+        int len = opsAcc[0].length;
+        int exeTrkr[] = new int[len];   //Used to track execution repeat
         int acc = 0;    //Accumulation
         int opCode = 2; //op code initialize as nop;
 
         do{
+            if(exeTrkr[ptr] > 0) break; //Check for loop.  Exit if already been here.
             exe++;
             exeTrkr[ptr] = exe;         //Track execution order
+
             opCode = opsAcc[0][ptr];    //Get opCode
             //Part 2 - Flip if opCode is 1 or 2 and not flipped before AND requested
             if(opCode > 0 && !flipped[ptr] && chkFlip){
@@ -85,7 +114,8 @@ public class Day8 {
                 flipped[ptr] = true;        //Flag this op has been tried
                 chkFlip = false;            //Only do 1 per pass
             }
-            switch(opCode){
+
+            switch(opCode){ //Execute op code.
                 case 0:     //acc - add [1] to accumulator and step 1
                     acc += opsAcc[1][ptr];
                     ptr++;
@@ -94,13 +124,13 @@ public class Day8 {
                     ptr += opsAcc[1][ptr];
                 break;
                 case 2:     //nop - no operation, just step 1
+                    int a = 0;
                     ptr++;
             }
-        //continue if next location was not already used and has code (end of program).
-        }while(exeTrkr[ptr] == 0 && opsAcc[0][ptr] != -1);
+        }while(ptr < len); //until end of program
 
-        if(ptr == 617) opsAcc[0][ptr] = 2;  //Flag if end of program reached 617(9).  Make EOP a nop.
-
+        //Flag if end of program reached 617(9).
+        if(ptr == len) flipped[len] = true;
         return acc;
     }
 }
