@@ -6,7 +6,6 @@ import util.ReadInput;
 public class Day6 {
 
     public static void update() throws IOException {
-
         String fileInfo[];
         fileInfo = ReadInput.GetInput(6);   //Get input in an array for 6
         int len = fileInfo.length;          //Length of input array

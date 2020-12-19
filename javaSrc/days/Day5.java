@@ -1,8 +1,15 @@
 package days;
 
+import java.io.IOException;
+import util.ReadInput;
+
 public class Day5 {
 
-    public static void update(String fileInfo[]) {
+    public static void update() throws IOException {
+        String fileInfo[];
+        fileInfo = ReadInput.GetInput(5);   //Get input in an array for 5
+        int len = fileInfo.length;          //Length of input array
+
         int seatRow = 0;
         int seatCol = 0;
         int seatNum = 0;
@@ -39,8 +46,8 @@ public class Day5 {
             System.out.println("\t" + sInfo[1][i]);
         }
         System.out.println("\n");
-        System.out.println("\nMx Seat - " + maxSeat);
-        System.out.println("\nMy Seat - " + mySeat);
+        System.out.println("\nMx Seat - " + maxSeat);   //confirmed 892
+        System.out.println("\nMy Seat - " + mySeat);    //confirmed 625
     }
 
     /**
