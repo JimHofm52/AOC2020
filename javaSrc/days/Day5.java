@@ -7,7 +7,7 @@ public class Day5 {
 
     public static void update() throws IOException {
         String fileInfo[];
-        fileInfo = ReadInput.GetInput(5);   //Get input in an array for 5
+        fileInfo = ReadInput.GetInputStr(5);   //Get input in an array for 5
         int len = fileInfo.length;          //Length of input array
 
         int seatRow = 0;

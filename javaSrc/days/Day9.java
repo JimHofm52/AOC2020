@@ -1,4 +1,4 @@
-        package days;
+package days;
 
 import java.io.IOException;
 import util.ReadInput;
@@ -6,15 +6,10 @@ import util.ReadInput;
 public class Day9 {
 
     public static void update() throws IOException {
-        String fileInfo[];
-        fileInfo = ReadInput.GetInput(9);   //Get input in an array for 9(91)
-        int len = fileInfo.length;          //Length of input array
+        long numList[] = ReadInput.GetInputLong(9); //Get input in an array for 9(91)
+        int len = numList.length;                   //Length of input array
 
-        long numList[] = new long[len];     //Convert input to long
-        for( int i = 0; i < len; i++) numList[i] = Long.parseLong(fileInfo[i]);
-
-
-        //------------------------------ part 2 -----------------------------------
+        //------------------------------ part 1 -----------------------------------
         int preLen = 25;        //Preamble length 25(5)
         boolean numOK = true;   //Is number OK
         int startNdx = -1;      //Where to start the search

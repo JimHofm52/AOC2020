@@ -5,18 +5,14 @@ import java.io.*;
 
 public class ReadInput {
 
-    public static String[] GetInput(int dayNum) throws IOException{
+    public static String[] GetInputStr(int dayNum) throws IOException{
 
-        String fDir = "C:\\Users\\Hofmjc\\Documents\\Proj_MyDoc\\AoC2020\\javaSrc\\textIn";
-        String fName = "Day" + dayNum + "Input.txt";
-        String fPath = fDir + "\\" + fName;
+        String fPath = GetFilePath(dayNum);
         File file = new File(fPath);
-
         String fileIn[] = new String[GetFileLen(fPath)]; //Declare array to length of file lines
-        for (int s = 0; s < fileIn.length; s++) fileIn[s] = ""; // Initialize with ""
+        // for (int s = 0; s < fileIn.length; s++) fileIn[s] = ""; // Initialize with ""
 
         Scanner sf = new Scanner(file); //Open file
-
         int maxIndx = -1;
         while(sf.hasNext()){    //Read in lines from file
             maxIndx++;
@@ -25,12 +21,47 @@ public class ReadInput {
         sf.close();             //Close file
 
         return fileIn;          //Pass back new array
+    }
 
+    public static int[] GetInputInt(int dayNum) throws IOException{
 
-        // for(int j=0;j<=maxIndx;j++) System.out.println(text[j]);
+        String fPath = GetFilePath(dayNum);
+        File file = new File(fPath);
+        int fileIn[] = new int[GetFileLen(fPath)]; //Declare array to length of file lines
 
-        // Day8.update(text);  //<===== Change to match day
+        Scanner sf = new Scanner(file); //Open file
+        int maxIndx = -1;
+        while(sf.hasNext()){    //Read in lines from file
+            maxIndx++;
+            fileIn[maxIndx] = Integer.parseInt(sf.nextLine());
+        }
+        sf.close();             //Close file
 
+        return fileIn;          //Pass back new array
+    }
+
+    public static long[] GetInputLong(int dayNum) throws IOException{
+
+        String fPath = GetFilePath(dayNum);
+        File file = new File(fPath);
+        long fileIn[] = new long[GetFileLen(fPath)]; //Declare array to length of file lines
+
+        Scanner sf = new Scanner(file); //Open file
+        int maxIndx = -1;
+        while(sf.hasNext()){    //Read in lines from file
+            maxIndx++;
+            fileIn[maxIndx] = Long.parseLong(sf.nextLine());
+        }
+        sf.close();             //Close file
+
+        return fileIn;          //Pass back new array
+    }
+
+    private static String GetFilePath(int dayNum){
+        String fDir = "C:\\Users\\Hofmjc\\Documents\\Proj_MyDoc\\AoC2020\\javaSrc\\textIn";
+        String fName = "Day" + dayNum + "Input.txt";
+        String fPath = fDir + "\\" + fName;
+        return fPath;
     }
 
     private static int GetFileLen(String fPaNa)  throws IOException{
