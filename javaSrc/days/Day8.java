@@ -30,35 +30,6 @@ public class Day8 {
     }
 
     /**
-     * Split the input into op code and acc or jmp value
-     * opCode is coded as 0 = acc, 1 = jmp, & 2 = nop
-     * 
-     * @param fileInfo
-     */
-    public static void update2(String fileInfo[]) {
-        int acc = 0;    //Accumlator
-        int len = fileInfo[0].length();
-                                                //Opcodes - 0=acc, 1=jmp, 2=nop
-        int opsAcc[][] = new int[2][len];       //Opcode[0][] / Acc[1][]
-        boolean flipped[] = new boolean[len];   //Part 2 track if flipping op has has been tried
-
-        ParceCodes(fileInfo, opsAcc);   //Split input into [0]opCode and [1]acc or jmp value
-
-        acc =  FindLoop(opsAcc, flipped, false);        //Part 1
-        System.out.println("\n\nAccumulator - " + acc); //Part 1
-
-        // Part 2
-        int nxtCnt = 0;     //Count trys.  No more than arrays.
-        do{
-            nxtCnt++;
-            acc = FindLoop(opsAcc, flipped, true);
-        //continue if end of program[0][617(9)] initialized (-2) and LT 650 trys (safety)
-        }while(opsAcc[0][len - 1] < 0 && nxtCnt < len); 
-
-        System.out.println("\n\nAccumulator - " + acc);  //Part 2
-    }
-
-    /**
      * Parce input and split to:
      * ops value[0].  0 = add to acc cmd, 1 = jmp to offset cmd, 2 = nop cmd
      * acc value[1], acc value or jmp offset
