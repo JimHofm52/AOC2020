@@ -15,7 +15,6 @@ import days.Day10;
 import days.Day11;
 import days.Day12;
 import days.Day13;
-import days.Day13A;
 
 public class AoC2020 {
     public static void main(String[] arg) throws IOException{
@@ -27,6 +26,6 @@ public class AoC2020 {
         // Day9.update();  //<===== Change to match day
         // Day10.update();  //<===== Change to match day
         // Day11.update();  //<===== Change to match day
-        Day13A.update();  //<===== Change to match day
+        Day13.update();  //<===== Change to match day
     }
 }
