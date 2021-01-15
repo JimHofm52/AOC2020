@@ -42,7 +42,7 @@ public class Day11 {
      */
     private static boolean ChgSeats(String prstSeats[], boolean part1){
         String copySeats[] = new String[prstSeats.length]; //copy for testing
-        copySeats = AryCopy.CopyStr(prstSeats);
+        copySeats = AryUtil.CopyStr(prstSeats);
         for(int r = 0; r < prstSeats.length; r++ ){
             AnalRules(prstSeats, copySeats, r, part1);
         }
