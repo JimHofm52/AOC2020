@@ -40,6 +40,17 @@ public class ReadInput {
         return fileIn;          //Pass back new array
     }
 
+    public static int[] GetInputIntCS(int dayNum) throws IOException{
+
+        String fileIn[] = GetInputStr(dayNum);
+
+        int numIn[] = new int[0];
+        for(int i = 0; i < fileIn.length; i++){
+                numIn = ParceStrInt(fileIn[i], numIn);
+        }
+        return numIn;          //Pass back new array
+    }
+
     public static long[] GetInputLong(int dayNum) throws IOException{
 
         String fPath = GetFilePath(dayNum);
@@ -76,5 +87,26 @@ public class ReadInput {
         sf.close();
         return i;
     }
+
+    //Convert a comma seperated string of int to an array and append to passed array.
+    private static int[] ParceStrInt(String readIn, int numIn[]){
+        int numLen = numIn.length;
+        int cCnt = 0;
+        for(int i = 0; i < readIn.length(); i++) if(readIn.charAt(i) == ',') cCnt++; //Count commas
+        numIn = Arrays.copyOf(numIn, numLen + ++cCnt);  //Expand array for new values
+
+        int beg = 0;
+        for(int end = 0; end < readIn.length(); end++){
+            if(readIn.charAt(end) == ','){
+                numIn[numLen] = Integer.parseInt(readIn.substring(beg, end));
+                beg = end + 1;
+                numLen++;
+            }
+        }
+        numIn[numLen] = Integer.parseInt(readIn.substring(beg, readIn.length()));
+        return numIn;
+    }
+    
+
 
 }
