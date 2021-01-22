@@ -21,6 +21,15 @@ public class AryUtil {
         return myAry;
     }
 
+    public static void CopyInt2By(int[][] from, int[][] to){
+        for(int i = 0; i < from.length; i++){
+            for(int j = 0; j < from[0].length; j++){
+                to[i][j] = from[i][j];
+            }
+        }
+        return;
+    }
+
     public static int[][] CopyInt2By(int[][] from, int size){
         // int [][] myAry = new int[from.length][from[0].length];
         int [][] myAry = new int[size][from[0].length];

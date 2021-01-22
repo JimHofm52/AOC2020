@@ -46,7 +46,7 @@ public class ReadInput {
 
         int numIn[] = new int[0];
         for(int i = 0; i < fileIn.length; i++){
-                numIn = ParceStrInt(fileIn[i], numIn);
+                numIn = ParceStrIntCS(fileIn[i], numIn);
         }
         return numIn;          //Pass back new array
     }
@@ -89,7 +89,7 @@ public class ReadInput {
     }
 
     //Convert a comma seperated string of int to an array and append to passed array.
-    private static int[] ParceStrInt(String readIn, int numIn[]){
+    public static int[] ParceStrIntCS(String readIn, int numIn[]){
         int numLen = numIn.length;
         int cCnt = 0;
         for(int i = 0; i < readIn.length(); i++) if(readIn.charAt(i) == ',') cCnt++; //Count commas
@@ -107,6 +107,22 @@ public class ReadInput {
         return numIn;
     }
     
+    //Convert a comma seperated string of int to an array.
+    public static int[] ParceStrIntCS(String readIn){
+        int cCnt = 0;
+        for(int i = 0; i < readIn.length(); i++) if(readIn.charAt(i) == ',') cCnt++; //Count commas
+        int[] numIn = new int[++cCnt];
 
-
+        cCnt = 0;
+        int beg = 0;
+        for(int end = 0; end < readIn.length(); end++){     //For each char
+            if(readIn.charAt(end) == ','){                  //if char is ','
+                numIn[cCnt] = Integer.parseInt(readIn.substring(beg, end));
+                cCnt++;
+                beg = end + 1;
+            }
+        }
+        numIn[cCnt] = Integer.parseInt(readIn.substring(beg, readIn.length()));
+        return numIn;
+    }
 }
